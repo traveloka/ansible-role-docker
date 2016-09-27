@@ -1,0 +1,68 @@
+---
+- block:
+    - name: add docker upstream key
+      apt_key:
+        id: 58118E89F3A912897C070ADBF76221572C52609D
+        keyserver: hkp://p80.pool.sks-keyservers.net:80
+        state: present
+
+    - name: add docker repository
+      apt_repository:
+        repo: deb https://apt.dockerproject.org/repo {{ ansible_distribution | lower }}-{{ ansible_distribution_release }} main
+        state: present
+
+
+    - name: install docker-engine
+      apt:
+        name: docker-engine
+        state: "{{ docker_version }}"
+
+    - name: start docker-engine
+      service:
+        name: docker
+        enabled: yes
+        state: started
+
+    - name: write docker daemon configuration
+      template:
+        src: daemon.json.j2
+        dest: /etc/docker/daemon.json
+        owner: root
+        group: root
+        mode: "0644"
+      register: docker_write_configuration_status
+
+    # Restarting docker-engine will force kill every running container
+    - name: restart docker-engine
+      when: "(not docker_skip_restart) and (docker_write_configuration_status|changed)"
+      service:
+        name: docker
+        state: restarted
+
+
+    - name: create container state directory
+      file:
+        path: "{{ docker_container_state_path }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: format stateful device
+      when: "docker_stateful_device != ''"
+      filesystem:
+        dev: "{{ docker_stateful_device }}"
+        fstype: ext4
+        resizefs: yes
+
+    - name: mount stateful device
+      when: "docker_stateful_device != ''"
+      mount:
+        src: "{{ docker_stateful_device }}"
+        fstype: ext4
+        name: "{{ docker_container_state_path }}"
+        state: mounted
+
+  become: yes
+  tags:
+    - docker
