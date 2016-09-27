@@ -1,7 +1,7 @@
 # docker #
 
 Installs docker daemon
-
+```
 /var/container_state contain state for every container,
 host can mount this directory from separate device
 how to use it:
@@ -11,14 +11,18 @@ e.g.
   docker run --name jenkins -v /var/container_state/jenkins/jenkins_home:/var/jenkins_home jenkinsci/jenkins
 - Running static_web container with config and content volume
   docker run --name static_web -v /var/container_state/static_web/config:/etc/nginx -v /var/container_state/static_web/content:/srv/www/html nginx
+```
 
 ## Requirements ##
 
+```
 - debian-like environment (debian, ubuntu, mint, etc)
 - overlay2 storage driver need kernel>=3.18
+```
 
 ## Role Variables ##
 
+```
 defaults:
   - name: docker_version
     desc: docker daemon version to be installed
@@ -40,5 +44,6 @@ vars:
   - name: docker_container_state_path
     desc: path for persistent storage for container
     value: /var/container_state
+```
 
 ## Dependencies ##
