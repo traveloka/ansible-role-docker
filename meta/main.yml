@@ -1,7 +1,6 @@
 galaxy_info:
   author: win (kurnia.d,win@gmail.com)
   description: Install docker daemon
-  company: Traveloka
   license: MIT
   min_ansible_version: 2.1
   platforms:
@@ -11,6 +10,5 @@ galaxy_info:
   galaxy_tags:
     - installer
     - docker
-    - ubuntu-xenial
 
 dependencies: []
