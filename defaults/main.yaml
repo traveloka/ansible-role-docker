@@ -4,6 +4,7 @@
 docker_version: latest
 
 docker_storage_driver: overlay2
-docker_skip_restart: false
+docker_log_driver: journald
 
+docker_skip_restart: false
 docker_stateful_device: ''

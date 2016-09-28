@@ -20,6 +20,7 @@ e.g.
 - apt-get like package manager (debian, ubuntu, mint, etc)
 - overlay2 storage driver need kernel >= 4.0
 - overlay2 storave driver need docker_version >= 1.12.0
+- journald log driver need journald to be started before
 ```
 
 ## Role Variables ##
@@ -32,6 +33,10 @@ defaults:
   - name: docker_storage_driver
     desc: Storage driver name for docker daemon
     value: overylay2
+
+  - name: docker_log_driver
+    desc: Storage driver name for docker daemon
+    value: journald
 
   - name: docker_skip_restart
     desc: when configuration changes detected, should it restart the docker?
