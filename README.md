@@ -1,5 +1,6 @@
 # Docker role #
 Installs docker daemon
+
 there is some convention when using this role
 ```
 /var/container_state (can be configured) contain state for every container,
