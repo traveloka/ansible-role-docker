@@ -1,8 +1,7 @@
-# docker #
-
+# Docker role #
 Installs docker daemon
 ```
-/var/container_state contain state for every container,
+/var/container_state (can be configured) contain state for every container,
 host can mount this directory from separate device
 how to use it:
 create folder /var/container_state/[container_name]/[volume_name]
@@ -13,15 +12,15 @@ e.g.
   docker run --name static_web -v /var/container_state/static_web/config:/etc/nginx -v /var/container_state/static_web/content:/srv/www/html nginx
 ```
 
-## Requirements ##
 
+## Requirements ##
 ```
-- debian-like environment (debian, ubuntu, mint, etc)
-- overlay2 storage driver need kernel>=3.18
+- apt-get like package manager (debian, ubuntu, mint, etc)
+- overlay2 storage driver need kernel >= 4.0
+- overlay2 storave driver need docker_version >= 1.12.0
 ```
 
 ## Role Variables ##
-
 ```
 defaults:
   - name: docker_version
@@ -38,7 +37,7 @@ defaults:
 
   - name: docker_stateful_device
     desc: which device is to be mounted to {{ docker_container_state_path }}
-    value: /dev/xvdf
+    value: ''
 
 vars:
   - name: docker_container_state_path
