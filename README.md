@@ -1,5 +1,5 @@
 # Docker role #
-Installs docker daemon
+Install docker daemon
 
 there is some convention when using this role
 ```
@@ -32,7 +32,7 @@ defaults:
 
   - name: docker_storage_driver
     desc: Storage driver name for docker daemon
-    value: overylay2
+    value: overlay2
 
   - name: docker_log_driver
     desc: Storage driver name for docker daemon
